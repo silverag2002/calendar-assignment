@@ -5,6 +5,10 @@ const GlobalContext = React.createContext({
   setMonthIndex: (index) => {},
   showEventModal: false,
   setShowEventModal: () => {},
+  dateSelected: "",
+  setDateSelected: () => {},
+  savedEvents: [],
+  setSavedEvents: () => {},
 });
 
 export default GlobalContext;

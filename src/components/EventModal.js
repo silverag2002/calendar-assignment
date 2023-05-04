@@ -1,18 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+function initialEvents() {
+  const storedEvents = localStorage.getItem("savedEvents");
+  const parsedEvents = storedEvents ? JSON.parse(storedEvents) : [];
+  return parsedEvents;
+}
 
 export default function EventModal() {
-  const { setShowEventModal } = useContext(GlobalContext);
-  const [services, setServices] = useState("");
-  const [client, setClient] = useState("");
-   const [timeAndDuration,setTimeAndDuration]=useState({
-    date:
-   })
+  const { setShowEventModal, dateSelected } = useContext(GlobalContext);
+  console.log("Date selected", dateSelected);
+  const [services, setServices] = useState("Not Selected");
+  const [client, setClient] = useState("Not Selected");
+  const [selectedDate, setSelectedDateInEventModal] = useState(
+    dateSelected.format("YYYY-MM-DD")
+  );
+  console.log("Data inital ", selectedDate);
   const date = new Date();
-  const defaultTime = date.toLocaleTimeString();
-  console.log("Default time ", defaultTime);
+  const [selectedTime, setSelectedTime] = useState(date.toLocaleTimeString());
+  const [duration, setDuration] = useState("60");
+  const [fees, setFees] = useState("100");
+
+  function handleAppointment() {}
 
   const options = ["one", "two", "three"];
   const defaultOption = options[0];
@@ -24,11 +34,57 @@ export default function EventModal() {
     console.log("change", event);
     setServices(event.value);
   }
+  function handleChangeTime(event) {
+    console.log("change Time", event);
+    setSelectedTime(event.target.value);
+  }
+  function handleChangeDate(event) {
+    console.log("changeDate", event);
+    setSelectedDateInEventModal(event.target.value);
+  }
+  function handleChangeFees(event) {
+    console.log("changeDate", event);
+    setFees(event.target.value);
+  }
+  function handleChangeDuration(event) {
+    console.log("changeDate", event);
+    setDuration(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = {
+      duration,
+      fees,
+      selectedDate,
+      selectedTime,
+      services,
+      client,
+      id: Date.now(),
+    };
+    savedEvents.push(data);
+    console.log("Data", data);
+    console.log("saved events", savedEvents);
+    console.log("saving event", savedEvents);
+    localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+    setShowEventModal(false);
+  }
+
+  const [savedEvents, setSavedEvents] = useState(initialEvents());
+
+  //   useEffect(() => {
+
+  //   }, [savedEvents]);
+
   return (
     <div className=" md:h-3/5 md:w-full fixed left-0 top-0 flex justify-center items">
-      <form className="bg-white rounded-lg shadow-2xl md:w-1/4 h-96 w-96">
+      <form
+        className="bg-white rounded-lg shadow-2xl md:w-1/4 h-96 w-96"
+        onSubmit={(event) => handleSubmit(event)}
+      >
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <h1>New Appointment</h1>
+          <h1>{dateSelected.format("dddd , MMMM DD")}</h1>
         </header>
         <div className="flex flex-row justify-between items-center px-4 py-8">
           <div className="w-3/5 px-1 ">
@@ -49,12 +105,22 @@ export default function EventModal() {
         </div>
         <div className="flex flex-row justify-between items-center px-3 py-2">
           <div className="pl-2 ">
-            <input type="date" className="border-2 border-gray-200 p-1 w-32" />
+            <input
+              type="date"
+              value={dateSelected.format("YYYY-MM-DD")}
+              className="border-2 border-gray-200 p-1 w-32"
+              onChange={(event) => {
+                handleChangeDate(event);
+              }}
+            />
           </div>
           <div>
             <input
               type="time"
-              value={defaultTime}
+              value={selectedTime}
+              onChange={(event) => {
+                handleChangeTime(event);
+              }}
               className="border-2 border-gray-200 p-1 w-36"
             />
           </div>
@@ -62,6 +128,10 @@ export default function EventModal() {
             <input
               type="number"
               pattern="[0-9]*"
+              onChange={(event) => {
+                handleChangeDuration(event);
+              }}
+              value={duration}
               className="border-2 border-gray-200 p-1 w-10 "
             />
             <span className="pl-1">min</span>
@@ -86,7 +156,10 @@ export default function EventModal() {
               <input
                 type="number"
                 pattern="[0-9]*"
-                value=""
+                onChange={(event) => {
+                  handleChangeFees(event);
+                }}
+                value={fees}
                 className="border-2 border-gray-200 p-1 w-16 "
               />
             </div>
@@ -94,7 +167,27 @@ export default function EventModal() {
         </div>
         <div className="flex flex-row justify-between items-center px-4 py-2">
           <span className="px-1"> Total Amount</span>
-          <span> $100</span>
+          <span> ${fees}</span>
+        </div>
+        <div className="flex flex-row justify-center items-center px-4 py-2">
+          <button
+            className="cursor-pointer  bg-sky-600 mx-2 px-4 py-2 rounded-md   text-white"
+            // onClick={() => {
+            //   setShowEventModal(false);
+            //   handleAppointment();
+            // }}
+            type="submit"
+          >
+            Done
+          </button>
+          <button
+            className="cursor-pointer  bg-gray-100 px-4 mx-2 py-2  text-black rounded-md"
+            onClick={() => {
+              setShowEventModal(false);
+            }}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>
