@@ -5,48 +5,6 @@ export default function Calendar({ month }) {
   console.log("Month value", month);
   return (
     <React.Fragment>
-      <div className="flex flex-row-reverse">
-        <div class="flex items-center">
-          <button className="border rounded py-1 px-3 mr-3">Today</button>
-        </div>
-        <button>
-          <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-              />
-            </svg>
-          </span>
-        </button>
-
-        <button>
-          <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg>
-          </span>
-        </button>
-      </div>
       <div className="flex-1 grid grid-cols-7 grid-rows-5 ">
         {month.map((row, ind) => (
           <React.Fragment key={ind}>

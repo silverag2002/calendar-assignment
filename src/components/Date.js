@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import dayjs from "dayjs";
+import GlobalContext from "../context/GlobalContext";
 
 export default function Date({ day, rowIndex }) {
+  const { setShowEventModal } = useContext(GlobalContext);
   console.log("in Date component and date value received", day);
   function designPresentDay() {
     return dayjs().format("DD-MM-YYYY") == day.format("DD-MM-YYYY")
@@ -9,7 +11,12 @@ export default function Date({ day, rowIndex }) {
       : null;
   }
   return (
-    <div class="border border-gray-200 flex flex-col">
+    <div
+      class="border border-gray-200 flex flex-col"
+      onClick={() => {
+        setShowEventModal(true);
+      }}
+    >
       <header class="flex flex-col items-center">
         {rowIndex == 0 ? (
           <p className="text-sm mt-1">{day.format("ddd").toUpperCase()}</p>
