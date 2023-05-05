@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     setMonth(getMonth(monthIndex));
   }, [monthIndex]);
-  console.log("Month value in app.js", month);
+
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}

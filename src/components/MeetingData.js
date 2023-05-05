@@ -5,7 +5,6 @@ export default function TableData() {
   useEffect(() => {
     const meetingInfo = JSON.parse(localStorage.getItem("savedEvents"));
     if (meetingInfo?.length) {
-      console.log("Final clients", meetingInfo);
       setMeetingData(meetingInfo);
     }
   }, []);

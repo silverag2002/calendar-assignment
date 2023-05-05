@@ -5,7 +5,6 @@ export default function TableData() {
   useEffect(() => {
     const clientInfo = JSON.parse(localStorage.getItem("Total Clients"));
     if (clientInfo?.length) {
-      console.log("Final clients", clientInfo);
       setClientData(clientInfo);
     }
   }, []);

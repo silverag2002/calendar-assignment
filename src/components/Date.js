@@ -7,21 +7,17 @@ export default function Date({ day, rowIndex }) {
   const { setShowEventModal, setDateSelected, showEventModal } =
     useContext(GlobalContext);
   const [dayEvents, setDayEvents] = useState([]);
-  console.log("in Date component and date value received", day);
 
   useEffect(() => {
     const allSavedEvent = JSON.parse(localStorage.getItem("savedEvents"));
-    console.log("Events from local storage", allSavedEvent);
+
     if (allSavedEvent?.length > 0) {
-      console.log("Day format", day.format("YYYY-MM-DD"));
       const events = allSavedEvent.filter((eve) => {
         if (eve.selectedDate == day.format("YYYY-MM-DD").toString()) {
-          console.log("test", eve);
-
           return eve;
         }
       });
-      console.log("event for ther data ", events);
+
       setDayEvents(events);
     }
   }, [showEventModal, day]);

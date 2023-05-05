@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Date from "./Date";
 import dayjs from "dayjs";
 export default function Calendar({ month }) {
-  console.log("Month value", month);
   return (
     <React.Fragment>
       <div className="flex-1 grid grid-cols-7 grid-rows-5 ">

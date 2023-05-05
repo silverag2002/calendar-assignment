@@ -11,7 +11,7 @@ function initialEvents() {
 
 export default function EventModal() {
   const { setShowEventModal, dateSelected } = useContext(GlobalContext);
-  console.log("Date selected", dateSelected);
+
   const [services, setServices] = useState("Not Selected");
   const [addNewClient, setAddNewClient] = useState(false);
   const [newClient, setNewClient] = useState("");
@@ -21,7 +21,6 @@ export default function EventModal() {
   );
   const [totalClients, setTotalClients] = useState([]);
 
-  console.log("Data inital ", selectedDate);
   const date = new Date();
   const [selectedTime, setSelectedTime] = useState(date.toLocaleTimeString());
   const [duration, setDuration] = useState("60");
@@ -44,32 +43,26 @@ export default function EventModal() {
     localStorage.setItem("Total Clients", JSON.stringify(newList));
     setAddNewClient(false);
   }
-  console.log("Final total number of clients", totalClients);
+
   const options = ["Appointment", "Meeting", "Consultation"];
 
   const defaultOption = options[0];
   function handleChangeServices(event) {
-    console.log("change", event);
     setClient(event.value);
   }
   function handleChange(event) {
-    console.log("change", event);
     setServices(event.value);
   }
   function handleChangeTime(event) {
-    console.log("change Time", event);
     setSelectedTime(event.target.value);
   }
   function handleChangeDate(event) {
-    console.log("changeDate", event);
     setSelectedDateInEventModal(event.target.value);
   }
   function handleChangeFees(event) {
-    console.log("changeDate", event);
     setFees(event.target.value);
   }
   function handleChangeDuration(event) {
-    console.log("changeDate", event);
     setDuration(event.target.value);
   }
 
@@ -90,9 +83,7 @@ export default function EventModal() {
       id: Date.now(),
     };
     savedEvents.push(data);
-    console.log("Data", data);
-    console.log("saved events", savedEvents);
-    console.log("saving event", savedEvents);
+
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
     // let check = 0;
     // for (let i = 0; i < totalClients.length; i++) {
