@@ -9,9 +9,13 @@ function initialEvents() {
 }
 
 export default function EventModal() {
-  const { setShowEventModal, dateSelected } = useContext(GlobalContext);
+  const { setShowEventModal, dateSelected, totalClients, setTotalClients } =
+    useContext(GlobalContext);
+
   console.log("Date selected", dateSelected);
   const [services, setServices] = useState("Not Selected");
+  const [addNewClient, setAddNewClient] = useState(false);
+  const [newClient, setNewClient] = useState("");
   const [client, setClient] = useState("Not Selected");
   const [selectedDate, setSelectedDateInEventModal] = useState(
     dateSelected.format("YYYY-MM-DD")
@@ -22,9 +26,19 @@ export default function EventModal() {
   const [duration, setDuration] = useState("60");
   const [fees, setFees] = useState("100");
 
-  function handleAppointment() {}
+  function handleChangeNewClient(event) {
+    setNewClient(event.target.value);
+  }
 
-  const options = ["one", "two", "three"];
+  function handleAddNewClient(event) {
+    event.preventDefault();
+    const newList = [...totalClients, newClient];
+    setTotalClients(newList);
+    setAddNewClient(false);
+  }
+  console.log("Final total number of clients", totalClients);
+  const options = ["Appointment", "Meeting", "Consultation"];
+
   const defaultOption = options[0];
   function handleChangeServices(event) {
     console.log("change", event);
@@ -51,6 +65,11 @@ export default function EventModal() {
     setDuration(event.target.value);
   }
 
+  function handleNewEntry(event) {
+    event.preventDefault();
+    setAddNewClient(true);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     const data = {
@@ -67,6 +86,17 @@ export default function EventModal() {
     console.log("saved events", savedEvents);
     console.log("saving event", savedEvents);
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+    // let check = 0;
+    // for (let i = 0; i < totalClients.length; i++) {
+    //   if (totalClients[i] === client) {
+    //     check += 1;
+    //   }
+    // }
+    // if (check === 0) {
+    //   const newOptions = [...options, client];
+    //   setTotalClients(newOptions);
+    // }
+    // console.log("Total clients", totalClients);
     setShowEventModal(false);
   }
 
@@ -79,7 +109,7 @@ export default function EventModal() {
   return (
     <div className=" md:h-3/5 md:w-full fixed left-0 top-0 flex justify-center items">
       <form
-        className="bg-white rounded-lg shadow-2xl md:w-1/4 h-96 w-96"
+        className="bg-white rounded-lg shadow-2xl md:w-1/4 h-96 md:h-full w-96"
         onSubmit={(event) => handleSubmit(event)}
       >
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
@@ -89,20 +119,43 @@ export default function EventModal() {
         <div className="flex flex-row justify-between items-center px-4 py-8">
           <div className="w-3/5 px-1 ">
             <Dropdown
-              options={options}
+              options={totalClients}
               onChange={(event) => {
                 handleChange(event);
               }}
-              value={defaultOption}
               placeholder="Select an option"
             />
           </div>
           <div>
-            <button className="font-bold bg-gray-200 px-4 py-2 rounded-md">
+            <button
+              className="font-bold bg-gray-200 px-4 py-2 rounded-md"
+              onClick={(event) => handleNewEntry(event)}
+            >
               +New Client
             </button>
           </div>
         </div>
+        {addNewClient ? (
+          <div className="flex flex-row justify-between items-center px-4 ">
+            <div className="w-3/5 px-1 ">
+              <input
+                type="text"
+                value={newClient}
+                onChange={(eve) => handleChangeNewClient(eve)}
+                className="border-2 border-gray-200 p-1 "
+                placeholder="Add Client"
+              />
+            </div>
+            <div>
+              <button
+                className="font-bold bg-gray-200 px-4 py-2 rounded-md"
+                onClick={(event) => handleAddNewClient(event)}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        ) : null}
         <div className="flex flex-row justify-between items-center px-3 py-2">
           <div className="pl-2 ">
             <input
