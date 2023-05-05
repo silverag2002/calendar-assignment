@@ -19,11 +19,7 @@ export default function EventModal() {
   const [selectedDate, setSelectedDateInEventModal] = useState(
     dateSelected.format("YYYY-MM-DD")
   );
-  const [totalClients, setTotalClients] = useState([
-    "Brad Pitt",
-    "Adam Cohen",
-    "Angela Simpson",
-  ]);
+  const [totalClients, setTotalClients] = useState([]);
 
   console.log("Data inital ", selectedDate);
   const date = new Date();
@@ -237,10 +233,6 @@ export default function EventModal() {
         <div className="flex flex-row justify-center items-center px-4 py-2">
           <button
             className="cursor-pointer  bg-sky-600 mx-2 px-4 py-2 rounded-md   text-white"
-            // onClick={() => {
-            //   setShowEventModal(false);
-            //   handleAppointment();
-            // }}
             type="submit"
           >
             Done

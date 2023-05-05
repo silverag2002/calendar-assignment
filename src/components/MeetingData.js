@@ -20,27 +20,27 @@ export default function TableData() {
       </div>
 
       <div>
-        <table class="table-auto w-full m-4 ">
-          <thead class="border-b-2 border-gray-200 my-5">
-            <tr class="my-8 flex justify-between">
-              <th>Client Name</th>
-              <th>Time</th>
-              <th>Date</th>
-              <th>Service</th>
-              <th>Fees</th>
-              <th>Duration</th>
+        <table class="border-separate [border-spacing:0.75rem] ">
+          <thead class="  my-5 mx-3">
+            <tr class="row">
+              <th class="col px-16 py-8">Client Name</th>
+              <th class="col px-16 py-8">Time</th>
+              <th class="col px-16 py-8">Date</th>
+              <th class="col px-16 py-8">Service</th>
+              <th class="col px-16 py-8">Fees</th>
+              <th class="col px-16 py-8">Duration</th>
             </tr>
           </thead>
           <tbody class="my-8">
             {meetingData.map((meet) => {
               return (
-                <tr class="flex justify-between mx-5">
-                  <td>{meet.services}</td>
-                  <td>{meet.selectedTime}</td>
-                  <td>{meet.selectedDate}</td>
-                  <td>{meet.client}</td>
-                  <td>{meet.fees}</td>
-                  <td>{meet.duration}</td>
+                <tr class="row ">
+                  <td class="col px-16 py-8">{meet.services}</td>
+                  <td class="col px-16 py-8">{meet.selectedTime}</td>
+                  <td class="col px-16 py-8">{meet.selectedDate}</td>
+                  <td class="col px-16 py-8">{meet.client}</td>
+                  <td class="col px-16 py-8">{meet.fees}</td>
+                  <td class="col px-16 py-8">{meet.duration}</td>
                 </tr>
               );
             })}

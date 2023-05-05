@@ -7,7 +7,7 @@ import MeetingData from "./MeetingData";
 export default function Meetings() {
   return (
     <React.Fragment>
-      <div className="h-screen flex flex-col">
+      <div className="h-screen min-w-screen flex flex-col">
         <CalendarHeader />
         <div className="flex flex-row flex-1">
           <Sidebar />
