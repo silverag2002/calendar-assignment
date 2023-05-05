@@ -9,8 +9,8 @@ const GlobalContext = React.createContext({
   setDateSelected: () => {},
   savedEvents: [],
   setSavedEvents: () => {},
-  totalClients: ["Brad Pitt", "Adam Cohen", "Angela Simpson"],
-  setTotalClients: () => {},
+  //   totalClients: ["Brad Pitt", "Adam Cohen", "Angela Simpson"],
+  //   setTotalClients: () => {},
 });
 
 export default GlobalContext;

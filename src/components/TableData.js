@@ -1,40 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 export default function TableData() {
-  console.log("Global contex", GlobalContext);
-  const { totalClients } = useContext(GlobalContext);
-  console.log("Total clients", totalClients);
+  const [clientData, setClientData] = useState([]);
+  useEffect(() => {
+    const clientInfo = JSON.parse(localStorage.getItem("Total Clients"));
+    if (clientInfo?.length) {
+      console.log("Final clients", clientInfo);
+      setClientData(clientInfo);
+    }
+  }, []);
   function handleChange(event) {}
   return (
     <div>
       <div className="m-4">
         <div className="text-xl">Clients and contacts</div>
-        <div className="text-xs mt-3 text-gray-600">Total clients : {}</div>
+        <div className="text-xs mt-3 text-gray-600">
+          Total clients : {clientData.length}
+        </div>
       </div>
       <div className="flex flex-row px-4">
-        <div className="flex flex-row justify-start items-center border-2 border-gray-200 w-auto border-radius-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 ml-2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-
-          <input
-            type-="text"
-            placeholder="Search"
-            onChange={(event) => handleChange(event)}
-            className=" py-2 px-3 focus:outline-none "
-          />
-        </div>
         <div className="flex flex-row cursor-pointer text-gray-600 p-2 rounded-md hover:text-sky-700 hover:bg-gray-100 mx-3 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,36 +49,23 @@ export default function TableData() {
             </tr>
           </thead>
           <tbody class="my-8">
-            <tr>
-              <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-              <td>
-                <button class=" text-gray-600 p-2 rounded-md bg-gray-100 mx-3 my-1">
-                  Adult
-                </button>
-              </td>
-              <td>Clinician: Ankit Gupta</td>
-            </tr>
-            <tr>
-              <td>Witchy Woman</td>
-              <button class=" text-gray-600 p-2 rounded-md bg-gray-100 mx-3 my-1">
-                Adult
-              </button>
-              <td>Clinician: Ankit Gupta</td>
-            </tr>
-            <tr>
-              <td>Shining Star</td>
-              <button class=" text-gray-600 p-2 rounded-md bg-gray-100 mx-3 my-1 ">
-                Child
-              </button>
-              <td>Clinician: Ankit Gupta</td>
-            </tr>
-            <tr>
-              <td>Clinician: Ankit Gupta</td>
-              <button class=" text-gray-600 p-2 rounded-md bg-gray-100 mx-3 my-1 ">
-                Adult
-              </button>
-              <td>Clinician: Ankit Gupta</td>
-            </tr>
+            {clientData.map((client) => {
+              return (
+                <tr>
+                  <td>{client}</td>
+                  <td>
+                    <button class=" text-gray-600 p-2 rounded-md bg-gray-100 mx-3 my-1">
+                      Adult
+                    </button>
+                  </td>
+                  <td class="flex justify-center items-center my-3">
+                    <span>Contact number:8100500891</span>
+                    <span class="mx-3"> Email:silverag2002@gmail.com</span>
+                  </td>
+                  <td>Clinician: Ankit Gupta</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

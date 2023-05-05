@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+
 function initialEvents() {
   const storedEvents = localStorage.getItem("savedEvents");
   const parsedEvents = storedEvents ? JSON.parse(storedEvents) : [];
@@ -9,9 +10,7 @@ function initialEvents() {
 }
 
 export default function EventModal() {
-  const { setShowEventModal, dateSelected, totalClients, setTotalClients } =
-    useContext(GlobalContext);
-
+  const { setShowEventModal, dateSelected } = useContext(GlobalContext);
   console.log("Date selected", dateSelected);
   const [services, setServices] = useState("Not Selected");
   const [addNewClient, setAddNewClient] = useState(false);
@@ -20,6 +19,12 @@ export default function EventModal() {
   const [selectedDate, setSelectedDateInEventModal] = useState(
     dateSelected.format("YYYY-MM-DD")
   );
+  const [totalClients, setTotalClients] = useState([
+    "Brad Pitt",
+    "Adam Cohen",
+    "Angela Simpson",
+  ]);
+
   console.log("Data inital ", selectedDate);
   const date = new Date();
   const [selectedTime, setSelectedTime] = useState(date.toLocaleTimeString());
@@ -30,10 +35,17 @@ export default function EventModal() {
     setNewClient(event.target.value);
   }
 
+  useEffect(() => {
+    const clientInfo = JSON.parse(localStorage.getItem("Total Clients"));
+    if (clientInfo?.length) {
+      setTotalClients(clientInfo);
+    }
+  }, []);
   function handleAddNewClient(event) {
     event.preventDefault();
     const newList = [...totalClients, newClient];
     setTotalClients(newList);
+    localStorage.setItem("Total Clients", JSON.stringify(newList));
     setAddNewClient(false);
   }
   console.log("Final total number of clients", totalClients);

@@ -18,7 +18,7 @@ function App() {
     <ContextWrapper>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/meetings" elementt={<Meetings />} />
+        <Route path="/meetings" element={<Meetings />} />
         <Route path="/clients" element={<Clients />} />
       </Routes>
     </ContextWrapper>
